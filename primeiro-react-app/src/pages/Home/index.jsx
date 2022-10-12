@@ -1,26 +1,46 @@
 import './style.css';
 import { useState } from 'react';
 
-import {Card} from '../../components/Card'
+import { Card } from '../../components/Card'
 
 export function Home() {
   //Criando um estado para atualizar dinamicamente o valor no front-end
-  const [nomeStudent, setNomeStudent] = useState('valor inicial');  
+  const [nomeStudent, setNomeStudent] = useState('valor inicial');
+  const [estudantes, setEstudantes] = useState([]);
+
 
   return (
     //deve-se retornar apenas 1 item,um fragment (<></>) ou um div geralmente (<div></div>)
     // e é usada para retornar um item de uma função java script para o react
-    <div className="container"> 
-    <h1 className='titulo'>nome do amiguinho: {nomeStudent}</h1>
+    <div className="container">
+      <h1 className='titulo'>nome do amiguinho: {nomeStudent}</h1>
 
-    <input type="text"  placeholder='Digite um nome, meu caro' onChange={e => handleNameChange(e.target.value)} />
-    <button type='button' >adicionar</button>
-    <Card name="Lucas" time="10:10:10"/>
-    <Card name="James Bond" time="00:00:07"/>
+      <input type="text" placeholder='Digite um nome, meu caro' onChange={e => alteraNomeEstudante(e.target.value)} />
+      <button type='button'  onClick={adicionaEstudante} >adicionar</button>
+      {
+        estudantes.map(estudante =>
+          <Card name={estudante.name} time={estudante.time} />
+        )
+      }
     </div>
   )
 
-  function handleNameChange(name){
+  function alteraNomeEstudante(name) {
     setNomeStudent(name)
   }
+
+  function adicionaEstudante(){
+    const novoEstudante = {
+      name: nomeStudent,
+      time: new Date().toLocaleTimeString("pt-br", {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      })
+    }
+
+    setEstudantes(prevEstudantes => [...prevEstudantes , novoEstudante])
+  }
+
+
 }
