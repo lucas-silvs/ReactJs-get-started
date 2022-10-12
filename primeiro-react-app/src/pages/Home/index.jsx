@@ -19,7 +19,11 @@ export function Home() {
       <button type='button'  onClick={adicionaEstudante} >adicionar</button>
       {
         estudantes.map(estudante =>
-          <Card name={estudante.name} time={estudante.time} />
+          <Card
+          key={estudante.time} 
+          name={estudante.name} 
+          time={estudante.time} 
+          />
         )
       }
     </div>
@@ -38,7 +42,8 @@ export function Home() {
         second: '2-digit'
       })
     }
-
+    // foi utilizado o spreadOperator para despejar todo o conteudo do array de estudantes antigo e
+    // assim realizando o append corretamente 
     setEstudantes(prevEstudantes => [...prevEstudantes , novoEstudante])
   }
 
