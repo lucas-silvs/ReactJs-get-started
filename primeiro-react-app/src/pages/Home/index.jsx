@@ -14,15 +14,19 @@ export function Home() {
   //o UserEffect é executado automaticamente assim que os itens da tela são renderizados 
   useEffect(()=>{
     // método do javascript para requisições https
-    fetch("https://api.github.com/users/lucas-silvs")
-    .then(Response => Response.json())
-    .then(data =>  {
+
+    async function fetchData(){
+      const response = await fetch("https://api.github.com/users/lucas-silvs")
+      const dados = await response.json()
+
       setusuario(
-        {nomeUsuario: data.name, 
-        avatarUsuario: data.avatar_url}
+        {nomeUsuario: dados.name, 
+        avatarUsuario: dados.avatar_url}
         )
-        
-    })
+
+    }
+
+    fetchData();
   }, [estudantes]);
 
 
